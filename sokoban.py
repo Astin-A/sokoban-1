@@ -158,3 +158,28 @@ def BreadthFirstSearch(): #* Implement breadthFirstSearch approach
                 actions.append(node_action + [action[-1]])
 
 
+def DepthFirstSearch(): #* Implement depthFirstSearch approach
+    beginBox = PosOfBoxes(GameState)
+    beginPlayer = PosOfPlayer(GameState)
+
+    StartState = (beginPlayer, beginBox)
+    frontier = collections.deque([[StartState]])
+    ExplordSet = set()
+    actions = [[0]]
+    while frontier:
+        node = frontier.pop()
+        node_action = actions.pop()
+        if IsEndState(node[-1][-1]):
+            print(','.join(node_action[1:]).replace(',',''))
+            break
+        if node[-1] not in ExplordSet:
+            ExplordSet.add(node[-1])
+            for action in LeagalActions(node[-1][0], node[-1][1]):
+                NewPosPlayer, NewPosBox = UpdateState(node[-1][0], node[-1][1], action)
+                if IsFailed(NewPosBox):
+                    continue
+                frontier.append(node + [(NewPosPlayer, NewPosBox)])
+                actions.append(node_action + [action[-1]])
+
+
+
