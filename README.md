@@ -23,7 +23,7 @@ This project proposed a AI solver for sokoban (japanese for warehouse keeper) wh
 
 
 ```
-$ python sokoban.py --help
+python sokoban.py --help
 ```
 ```
 Usage: sokoban.py [options]
@@ -36,13 +36,14 @@ Options:
 ```
 
 `-l`: The map is divided into test and level. Test is relatively simple, and level is more difficult.
+
 `-m`: The search algorithm is bfs, dfs, ucs or astar.
 
 
 ### Run the examples
 
 ```
-$ python sokoban.py -l test1.txt -m bfs
+python sokoban.py -l test1.txt -m bfs
 ```
 ```
 rUUdRdrUUluL
