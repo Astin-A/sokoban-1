@@ -141,15 +141,15 @@ def BreadthFirstSearch(): #* Implement breadthFirstSearch approach
     StartState = (beginPlayer, beginBox) #! for example ((2, 2), ((2, 3), (3, 4), (4, 4), (6, 1), (6, 4), (6, 5)))
     frontier = collections.deque([[StartState]]) #! store states
     actions = collections.deque([[0]]) #! store actions
-    ExplordSet = set()
+    ExploredSet = set()
     while frontier:
         node = frontier.popleft()
         node_action = actions.popleft()
         if IsEndState(node[-1][-1]):
             print(','.join(node_action[1:]).replace(',',''))
             break
-        if node[-1] not in ExplordSet:
-            ExplordSet.add(node[-1])
+        if node[-1] not in ExploredSet:
+            ExploredSet.add(node[-1])
             for action in LeagalActions(node[-1][0], node[-1][1]):
                 NewPosPlayer, NewPosBox = UpdateState(node[-1][0], node[-1][1], action)
                 if IsFailed(NewPosBox):
@@ -164,7 +164,7 @@ def DepthFirstSearch(): #* Implement depthFirstSearch approach
 
     StartState = (beginPlayer, beginBox)
     frontier = collections.deque([[StartState]])
-    ExplordSet = set()
+    ExploredSet = set()
     actions = [[0]]
     while frontier:
         node = frontier.pop()
@@ -172,8 +172,8 @@ def DepthFirstSearch(): #* Implement depthFirstSearch approach
         if IsEndState(node[-1][-1]):
             print(','.join(node_action[1:]).replace(',',''))
             break
-        if node[-1] not in ExplordSet:
-            ExplordSet.add(node[-1])
+        if node[-1] not in ExploredSet:
+            ExploredSet.add(node[-1])
             for action in LeagalActions(node[-1][0], node[-1][1]):
                 NewPosPlayer, NewPosBox = UpdateState(node[-1][0], node[-1][1], action)
                 if IsFailed(NewPosBox):
@@ -191,3 +191,35 @@ def heuristic(PosPlayer, PosBox): #* A heuristic function to calculate the overa
     for i in range(len(SortPosBox)):
         distance += (abs(SortPosBox[i][0] - SortPosGoals[i][0])) + (abs(SortPosBox[i][1] - SortPosGoals[i][1]))
     return distance
+
+
+def cost(actions): #* A cost function
+    return len([x for x in actions if x.islower()])
+
+def UniformCostSearch(): #* Implement uniformCostSearch approach
+    beginBox = PosOfBoxes(GameState)
+    beginPlayer = PosOfPlayer(GameState)
+
+    StartState = (beginPlayer, beginBox)
+    frontier = PriorityQueue()
+    frontier.push([StartState], 0)
+    ExploredSet = set()
+    actions = PriorityQueue()
+    actions.push([0],0)
+    while frontier:
+        node = frontier.pop()
+        node_action = actions.pop()
+        if IsEndState(node[-1][-1]):
+            print(','.join(node_action[1:]).replace(',',''))
+            break
+        if node[-1] not in ExploredSet:
+            ExploredSet.add(node[-1])
+            Cost = cost(node_action[1:])
+            for action in LeagalActions(node[-1][0], node[-1][1]):
+                NewPosPlayer, NewPosBox = UpdateState(node[-1][0], node[-1][1], action)
+                if IsFailed(NewPosBox):
+                    continue
+                frontier.push(node + [(NewPosPlayer, NewPosBox)], Cost)
+                actions.push(node_action + [action[-1]], Cost)
+
+
