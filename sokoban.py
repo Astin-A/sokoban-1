@@ -249,3 +249,23 @@ def AStarSearch(): #* Implement aStarSearch approach
                 Heuristic = heuristic(NewPosPlayer, NewPosBox)
                 frontier.push(node + [(NewPosPlayer, NewPosBox)], Heuristic + Cost)
                 actions.push(node_action + [action[-1]], Heuristic + Cost)
+
+
+
+def ReadCommand(argv): #* Read command
+    from optparse import OptionParser
+
+
+    parser = OptionParser()
+    parser.add_option('-l', '--level', dest='sokobanLevels',
+                      help='level of game to play', default='level1.txt')
+    parser.add_option('-m', '--method', dest='agentMethod',
+                      help='research method', default='bfs')
+    args = dict()
+    options, _ = parser.parse_args(argv)
+    with open('sokobanLevels/'+options.sokobanLevels,"r") as f: 
+        layout = f.readlines()
+    args['layout'] = layout
+    args['method'] = options.agentMethod
+    return args
+
