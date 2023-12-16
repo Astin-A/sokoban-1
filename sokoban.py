@@ -183,3 +183,11 @@ def DepthFirstSearch(): #* Implement depthFirstSearch approach
 
 
 
+def heuristic(PosPlayer, PosBox): #* A heuristic function to calculate the overall distance between the else boxes and the else goals
+    distance = 0
+    completes = set(PosGoals) & set(PosBox)
+    SortPosBox = list(set(PosBox).difference(completes))
+    SortPosGoals = list(set(PosGoals).difference(completes))
+    for i in range(len(SortPosBox)):
+        distance += (abs(SortPosBox[i][0] - SortPosGoals[i][0])) + (abs(SortPosBox[i][1] - SortPosGoals[i][1]))
+    return distance
