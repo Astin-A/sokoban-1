@@ -36,6 +36,7 @@ Options:
 ```
 
 `-l`: The map is divided into test and level. Test is relatively simple, and level is more difficult.
+
 `-m`: The search algorithm is bfs, dfs, ucs or astar.
 
 
