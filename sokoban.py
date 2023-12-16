@@ -223,3 +223,29 @@ def UniformCostSearch(): #* Implement uniformCostSearch approach
                 actions.push(node_action + [action[-1]], Cost)
 
 
+def AStarSearch(): #* Implement aStarSearch approach
+    beginBox = PosOfBoxes(GameState)
+    beginPlayer = PosOfPlayer(GameState)
+
+    StartState = (beginPlayer, beginBox)
+    frontier = PriorityQueue()
+    frontier.push([StartState], heuristic(beginPlayer, beginBox))
+    ExploredSet = set()
+    actions = PriorityQueue()
+    actions.push([0], heuristic(beginPlayer, StartState[1]))
+    while frontier:
+        node = frontier.pop()
+        node_action = actions.pop()
+        if IsEndState(node[-1][-1]):
+            print(','.join(node_action[1:]).replace(',',''))
+            break
+        if node[-1] not in ExploredSet:
+            ExploredSet.add(node[-1])
+            Cost = cost(node_action[1:])
+            for action in LeagalActions(node[-1][0], node[-1][1]):
+                NewPosPlayer, NewPosBox = UpdateState(node[-1][0], node[-1][1], action)
+                if IsFailed(NewPosBox):
+                    continue
+                Heuristic = heuristic(NewPosPlayer, NewPosBox)
+                frontier.push(node + [(NewPosPlayer, NewPosBox)], Heuristic + Cost)
+                actions.push(node_action + [action[-1]], Heuristic + Cost)
