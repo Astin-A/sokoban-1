@@ -269,3 +269,23 @@ def ReadCommand(argv): #* Read command
     args['method'] = options.agentMethod
     return args
 
+
+
+if __name__ == '__main__':
+    time_start = time.time()
+    layout, method = ReadCommand(sys.argv[1:]).values()
+    GameState = TransferGameStateI(layout)
+    PosWalls = PosOfWalls(GameState)
+    PosGoals = PosOfGoals(GameState)
+    if method == 'astar':
+        AStarSearch()
+    elif method == 'dfs':
+        DepthFirstSearch()
+    elif method == 'bfs':
+        BreadthFirstSearch()
+    elif method == 'ucs':
+        UniformCostSearch()
+    else:
+        raise ValueError('Invalid method')
+    time_end=time.time()
+    print('Runtime of %s: %.2f second.' %(method, time_end-time_start))
