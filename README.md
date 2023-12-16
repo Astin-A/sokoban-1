@@ -23,7 +23,7 @@ This project proposed a AI solver for sokoban (japanese for warehouse keeper) wh
 
 
 ```
-$ python sokoban.py --help
+python sokoban.py --help
 ```
 ```
 Usage: sokoban.py [options]
@@ -43,7 +43,7 @@ Options:
 ### Run the examples
 
 ```
-$ python sokoban.py -l test1.txt -m bfs
+python sokoban.py -l test1.txt -m bfs
 ```
 ```
 rUUdRdrUUluL
