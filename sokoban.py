@@ -257,13 +257,13 @@ def ReadCommand(argv): #* Read command
 
 
     parser = OptionParser()
-    parser.add_option('-l', '--level', dest='sokobanLevels',
+    parser.add_option('-l', '--level', dest='Levels',
                       help='level of game to play', default='level1.txt')
     parser.add_option('-m', '--method', dest='agentMethod',
                       help='research method', default='bfs')
     args = dict()
     options, _ = parser.parse_args(argv)
-    with open('sokobanLevels/'+options.sokobanLevels,"r") as f: 
+    with open('Levels/'+options.Levels,"r") as f: 
         layout = f.readlines()
     args['layout'] = layout
     args['method'] = options.agentMethod
